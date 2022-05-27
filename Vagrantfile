@@ -4,15 +4,18 @@ Vagrant.configure("2") do |config|
     config.vbguest.auto_update = false
     config.vbguest.no_remote = true
   end
-  config.vm.define :stream do |stream|
-    stream.vm.box = "centos/stream8"
-    stream.vm.network :private_network, ip: "192.168.100.4"
-    stream.vm.hostname = "stream"
+  config.vm.define :streamaprov do |streamaprov|
+    streamaprov.vm.box = "centos/stream8"
+    streamaprov.vm.network :private_network, ip: "192.168.50.4"
+    streamaprov.vm.provision "file", source: "~/OneDrive/Escritorio/finalAprov/streama.service", destination: "$HOME/"
+    streamaprov.vm.provision "shell", path: "streamscript.sh"
+    streamaprov.vm.hostname = "streamaprov"
   end
-  config.vm.define :firewall do |firewall|
-    firewall.vm.box = "centos/stream8"
-    firewall.vm.network :private_network, ip: "209.191.100.3"
-    firewall.vm.network :private_network, ip: "192.168.100.3"
-    firewall.vm.hostname = "firewall"
+  config.vm.define :firewallaprov do |firewallaprov|
+    firewallaprov.vm.box = "centos/stream8"
+    firewallaprov.vm.network :private_network, ip: "209.191.100.3"
+    firewallaprov.vm.network :private_network, ip: "192.168.50.3"
+    firewallaprov.vm.provision "shell", path: "firescript.sh"
+    firewallaprov.vm.hostname = "firewallaprov"
   end
 end
